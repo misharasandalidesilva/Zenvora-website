@@ -124,6 +124,63 @@ body {
   }
 }
 
+@keyframes robotWave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-18deg);
+  }
+  40% {
+    transform: rotate(12deg);
+  }
+  60% {
+    transform: rotate(-16deg);
+  }
+  80% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes robotBlink {
+  0%,
+  44%,
+  48%,
+  100% {
+    transform: scaleY(1);
+  }
+  46% {
+    transform: scaleY(0.08);
+  }
+}
+
+@keyframes holoFloat {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-7px) translateX(3px);
+  }
+}
+
+.animate-robot-wave {
+  transform-box: fill-box;
+  transform-origin: 80% 85%;
+  animation: robotWave 2.8s ease-in-out infinite;
+}
+
+.animate-robot-blink {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: robotBlink 4.5s ease-in-out infinite;
+}
+
+.animate-holo-float {
+  animation: holoFloat 4s ease-in-out infinite;
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }

@@ -11,19 +11,19 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-white text-[#0F172A] transition-colors duration-300 dark:bg-[#090D0B] dark:text-white">
-      <SplashScreen />
-      <Navbar />
-      <main className="flex-1">
-        <Hero />
-        <Metrics />
-        <Services />
-        <WhyUs />
-        <Projects />
-        <Process />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
-  );
+      <div className="flex min-h-screen flex-col bg-white text-[#0F172A] transition-colors duration-300 dark:bg-[#090D0B] dark:text-white">
+        <SplashScreen />
+        <Navbar />
+        <main className="flex-1">
+          <Hero />
+          <Metrics />
+          <Services />
+          <WhyUs />
+          <Projects />
+          <Process />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+      );
 }

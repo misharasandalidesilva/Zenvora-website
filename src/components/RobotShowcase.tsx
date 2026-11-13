@@ -2,22 +2,42 @@
 
 import { useState, useRef } from "react";
 import Image from "next/image";
-import { Sparkles, Activity, Cpu, Waves } from "lucide-react";
+import {
+  Sparkles,
+  Terminal,
+  Activity,
+  CheckCircle2,
+  Code2,
+  Layers,
+} from "lucide-react";
 
-const aiGreetings = [
-  "Hi! I'm ZENVORA AI — ready to build?",
-  "Turning your ideas into live solutions.",
-  "Web • ERP • Cloud — Let's engineer it!",
-  "Always online. Let's create something extraordinary.",
+const aiActivities = [
+  {
+    greeting: "Hi! I'm ZENVORA AI — ready to engineer your solution.",
+    task: "Compiling Scalable Architecture...",
+    status: "Active • 100% Agile",
+    metric: "42ms Latency",
+  },
+  {
+    greeting: "Turning Ideas Into Solutions — Web, ERP & Cloud.",
+    task: "Optimizing High-Throughput POS Engine...",
+    status: "99.9% Uptime Verified",
+    metric: "0.08s Render",
+  },
+  {
+    greeting: "Next.js 16 • TypeScript • Cloud-Native DevOps.",
+    task: "Hardening Enterprise Security Layers...",
+    status: "Zero Vulnerabilities",
+    metric: "A+ Audit Score",
+  },
 ];
 
 export default function RobotShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [glowPos, setGlowPos] = useState({ x: 50, y: 50 });
   const [isHovered, setIsHovered] = useState(false);
-  const [isWaving, setIsWaving] = useState(false);
-  const [msgIndex, setMsgIndex] = useState(0);
+  const [activityIndex, setActivityIndex] = useState(0);
+  const [isInteracting, setIsInteracting] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = containerRef.current;
@@ -26,67 +46,52 @@ export default function RobotShowcase() {
     const px = (e.clientX - rect.left) / rect.width;
     const py = (e.clientY - rect.top) / rect.height;
 
-    // Smooth subtle 3D tilt
-    const rotateY = (px - 0.5) * 14;
-    const rotateX = (0.5 - py) * 12;
+    // Smooth subtle 3D tilt tracking the cursor
+    const rotateY = (px - 0.5) * 12;
+    const rotateX = (0.5 - py) * 10;
     setTilt({ x: rotateX, y: rotateY });
-    setGlowPos({ x: px * 100, y: py * 100 });
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
     setTilt({ x: 0, y: 0 });
-    setGlowPos({ x: 50, y: 50 });
   };
 
-  const handleRobotClick = () => {
-    setMsgIndex((prev) => (prev + 1) % aiGreetings.length);
-    setIsWaving(true);
-    setTimeout(() => setIsWaving(false), 1400);
+  const handleInteractiveClick = () => {
+    setIsInteracting(true);
+    setActivityIndex((prev) => (prev + 1) % aiActivities.length);
+    setTimeout(() => setIsInteracting(false), 900);
   };
+
+  const current = aiActivities[activityIndex];
 
   return (
     <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => {
-        setIsHovered(true);
-        setIsWaving(true);
-        setTimeout(() => setIsWaving(false), 1200);
-      }}
+      onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      onClick={handleRobotClick}
+      onClick={handleInteractiveClick}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          handleRobotClick();
+          handleInteractiveClick();
         }
       }}
-      aria-label="Interactive ZENVORA AI 3D Robot — hover or click to interact"
-      className="group relative flex w-full max-w-[520px] cursor-pointer items-center justify-center py-2 select-none focus:outline-none"
+      aria-label="Interactive ZENVORA AI 3D Robot Engineering Solutions"
+      className="group relative flex w-full max-w-[560px] cursor-pointer items-center justify-center py-2 select-none focus:outline-none"
     >
-      {/* 1. Dynamic Cursor-Tracking Ambient Emerald Aura (Zero Box, Zero Borders) */}
+      {/* 1. Full-UI Atmospheric Ambient Glow (Wide diffuse gradient — NO isolated circles) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-6 rounded-full transition-opacity duration-700"
-        style={{
-          background: `radial-gradient(circle 240px at ${glowPos.x}% ${glowPos.y}%, rgba(30, 185, 84, ${
-            isHovered ? 0.26 : 0.14
-          }), transparent 75%)`,
-        }}
+        className="pointer-events-none absolute inset-x-0 -top-8 -bottom-8 rounded-3xl bg-gradient-to-tr from-[#169A48]/8 via-[#1EB954]/12 to-transparent opacity-60 blur-3xl transition-opacity duration-700 group-hover:opacity-100 dark:from-[#169A48]/15 dark:via-[#1EB954]/20"
       />
 
-      {/* 2. Soft Ambient Deep Backlight Glow */}
+      {/* 2. Top-Right Floating Interactive Speech Bubble */}
       <div
-        aria-hidden="true"
-        className="pointer-events-none absolute h-72 w-72 rounded-full bg-[#169A48]/12 blur-[100px] transition-all duration-500 group-hover:bg-[#1EB954]/22 dark:bg-[#169A48]/25 dark:group-hover:bg-[#1EB954]/35 sm:h-96 sm:w-96"
-      />
-
-      {/* 3. Floating Interactive Speech Bubble (Top Right) */}
-      <div
-        className={`pointer-events-none absolute -top-2 right-2 z-30 flex items-center gap-2 rounded-full border border-emerald-200/90 bg-white/95 px-4 py-2 text-xs font-semibold text-[#0F172A] shadow-[0_12px_32px_rgba(15,23,42,0.12)] backdrop-blur-md transition-all duration-300 dark:border-[#1EB954]/40 dark:bg-[#121915]/95 dark:text-white dark:shadow-[0_12px_35px_rgba(0,0,0,0.7)] sm:-top-4 sm:right-4 ${
+        className={`pointer-events-none absolute -top-4 right-0 z-30 flex items-center gap-2.5 rounded-2xl border border-emerald-200/90 bg-white/95 px-4 py-2 text-xs font-semibold text-[#0F172A] shadow-[0_12px_30px_rgba(15,23,42,0.1)] backdrop-blur-md transition-all duration-300 dark:border-[#1EB954]/40 dark:bg-[#121915]/95 dark:text-white dark:shadow-[0_12px_35px_rgba(0,0,0,0.7)] sm:-top-6 sm:right-2 ${
           isHovered
             ? "translate-y-0 scale-105 opacity-100"
             : "translate-y-1 scale-100 opacity-95"
@@ -95,101 +100,138 @@ export default function RobotShowcase() {
         <span className="flex items-center gap-0.5">
           <span className="h-2 w-0.5 animate-pulse rounded-full bg-[#169A48] dark:bg-[#1EB954]" />
           <span className="h-3.5 w-0.5 animate-pulse rounded-full bg-[#169A48] [animation-delay:150ms] dark:bg-[#1EB954]" />
-          <span className="h-1.5 w-0.5 animate-pulse rounded-full bg-[#169A48] [animation-delay:300ms] dark:bg-[#1EB954]" />
+          <span className="h-2 w-0.5 animate-pulse rounded-full bg-[#169A48] [animation-delay:300ms] dark:bg-[#1EB954]" />
         </span>
         <span className="text-[11.5px] font-medium tracking-tight">
-          {aiGreetings[msgIndex]}
+          {current.greeting}
         </span>
         <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#169A48] dark:text-[#1EB954]" />
       </div>
 
-      {/* 4. Floating Live Telemetry Badge (Floating on Left) */}
-      <div
-        aria-hidden="true"
-        className="animate-holo-float pointer-events-none absolute -left-2 top-1/4 z-20 hidden items-center gap-2 rounded-xl border border-slate-200/80 bg-white/90 px-3 py-1.5 text-[11px] font-semibold text-[#0F172A] shadow-md backdrop-blur-md dark:border-[#1F2F28] dark:bg-[#121915]/85 dark:text-white sm:flex"
-      >
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#1EB954] opacity-75" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-[#169A48] dark:bg-[#1EB954]" />
-        </span>
-        <Activity className="h-3 w-3 text-[#169A48] dark:text-[#1EB954]" />
-        <span>100% Agile Core</span>
-      </div>
-
-      {/* 5. Floating Tech Hologram Chip (Floating on Bottom-Right) */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-2 bottom-6 z-20 hidden items-center gap-1.5 rounded-xl border border-slate-200/80 bg-white/90 px-3 py-1.5 text-[11px] font-medium text-slate-700 shadow-md backdrop-blur-md dark:border-[#1F2F28] dark:bg-[#121915]/85 dark:text-slate-200 sm:flex"
-      >
-        <Cpu className="h-3 w-3 text-[#169A48] dark:text-[#1EB954]" />
-        <span>Next.js 16 • Cloud Native</span>
-      </div>
-
-      {/* 6. 3D Tilt + Floating Levitating Character Container */}
+      {/* 3. 3D Parallax & Levitation Container */}
       <div
         className="relative w-full transition-transform duration-200 ease-out"
         style={{
-          transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${
-            isHovered ? 1.03 : 1
+          transform: `perspective(1200px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${
+            isHovered ? 1.02 : 1
           })`,
         }}
       >
-        {/* Continuous Levitation Motion */}
+        {/* Slow Float Animation */}
         <div className="animate-float-slow relative flex w-full items-center justify-center">
-          {/* THE ORIGINAL 3D AI ROBOT (Decontaminated Transparent Cutout — No Black Box/Circle) */}
+          {/* THE 3D AI ROBOT (Continuous arm, no severed parts, pure transparent canvas) */}
           <Image
             src="/images/zenvora-ai-robot-cutout.png"
             alt="ZENVORA Interactive 3D AI Digital Systems Companion"
             width={1024}
             height={1024}
             priority
-            className="h-auto w-full max-w-[480px] object-contain drop-shadow-[0_22px_40px_rgba(22,154,72,0.18)] transition-all duration-300 dark:drop-shadow-[0_24px_55px_rgba(0,0,0,0.85)]"
+            className="h-auto w-full max-w-[500px] object-contain drop-shadow-[0_20px_35px_rgba(22,154,72,0.16)] transition-all duration-300 dark:drop-shadow-[0_26px_55px_rgba(0,0,0,0.9)]"
           />
 
-          {/* 7. Active Waving / Holographic Energy Ripple on Robot's Raised Hand (Left side of viewer / Robot's Right) */}
+          {/* 4. ACTIVE ENGINEERING HUD: Floating Holographic Console (Projecting from Robot's Hand) */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute top-[38%] left-[24%] z-20 flex items-center justify-center"
+            className="animate-holo-float pointer-events-none absolute -left-2 top-[24%] z-30 max-w-[210px] rounded-xl border border-emerald-300/60 bg-white/90 p-3 shadow-xl backdrop-blur-md transition-all duration-300 dark:border-[#1EB954]/40 dark:bg-[#0c1410]/90 dark:shadow-[0_16px_40px_rgba(0,0,0,0.8)] sm:-left-4 sm:max-w-[230px]"
           >
-            {/* Concentric Holographic Sonar Waves */}
-            <span
-              className={`absolute h-14 w-14 rounded-full border border-[#1EB954]/50 transition-all duration-700 ${
-                isWaving ? "animate-ping scale-150 opacity-90" : "animate-pulse opacity-40"
-              }`}
-            />
-            <span
-              className={`absolute h-8 w-8 rounded-full bg-[#1EB954]/25 transition-all duration-500 ${
-                isWaving ? "scale-125" : "scale-100"
-              }`}
-            />
-            <span className="h-3 w-3 rounded-full bg-[#1EB954] shadow-[0_0_14px_#1EB954]" />
+            {/* Console Header */}
+            <div className="flex items-center justify-between border-b border-emerald-200/60 pb-1.5 dark:border-[#1F2F28]">
+              <div className="flex items-center gap-1.5">
+                <Terminal className="h-3 w-3 text-[#169A48] dark:text-[#1EB954]" />
+                <span className="font-mono text-[10px] font-bold text-[#0F172A] tracking-wider uppercase dark:text-white">
+                  ZENVORA Core
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="h-1.5 w-1.5 animate-ping rounded-full bg-[#1EB954]" />
+                <span className="text-[9.5px] font-semibold text-[#169A48] dark:text-[#1EB954]">
+                  LIVE
+                </span>
+              </div>
+            </div>
 
-            {/* Dynamic Hand Waving Indicator Badge */}
-            <div
-              className={`absolute -top-7 -left-3 flex items-center gap-1 rounded-full border border-emerald-300/80 bg-white/95 px-2 py-0.5 text-[10px] font-bold text-[#169A48] shadow-sm backdrop-blur-sm transition-all duration-300 dark:border-[#1EB954]/60 dark:bg-[#090D0B]/95 dark:text-[#1EB954] ${
-                isWaving || isHovered
-                  ? "translate-y-0 scale-100 opacity-100"
-                  : "translate-y-1 scale-90 opacity-0"
-              }`}
-            >
-              <Waves className="h-3 w-3 animate-bounce" />
-              <span>Wave!</span>
+            {/* Active Code / System Stream */}
+            <div className="mt-2 space-y-1 font-mono text-[9.5px]">
+              <div className="flex items-center gap-1 text-slate-700 dark:text-emerald-300/90">
+                <Code2 className="h-2.5 w-2.5 shrink-0 text-[#169A48] dark:text-[#1EB954]" />
+                <span className="truncate">{current.task}</span>
+              </div>
+              <div className="flex items-center justify-between pt-1 text-[9px] text-slate-500 dark:text-[#94A3B8]">
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="h-2.5 w-2.5 text-[#169A48] dark:text-[#1EB954]" />
+                  {current.status}
+                </span>
+                <span className="font-medium text-[#169A48] dark:text-[#1EB954]">
+                  {current.metric}
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* 8. Pulsing Emerald Core Reactor on Robot's Chest */}
+          {/* 5. Floating Cloud & ERP Telemetry Chip (Bottom Right) */}
+          <div
+            aria-hidden="true"
+            className="animate-holo-float pointer-events-none absolute -right-2 bottom-[14%] z-20 hidden items-center gap-2 rounded-xl border border-slate-200/80 bg-white/90 px-3.5 py-2 shadow-lg backdrop-blur-md dark:border-[#1F2F28] dark:bg-[#121915]/90 sm:flex"
+          >
+            <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-50 text-[#169A48] dark:bg-[#1F2F28] dark:text-[#1EB954]">
+              <Layers className="h-3.5 w-3.5" />
+            </div>
+            <div>
+              <p className="text-[10.5px] font-bold text-[#0F172A] dark:text-white">
+                Systems & Architecture
+              </p>
+              <p className="flex items-center gap-1 text-[9.5px] text-slate-500 dark:text-[#94A3B8]">
+                <Activity className="h-2.5 w-2.5 text-[#169A48] dark:text-[#1EB954]" />
+                Enterprise Ready
+              </p>
+            </div>
+          </div>
+
+          {/* 6. Active Holographic Vertical Rays Projecting Upwards from Hand */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute top-[36%] left-[21%] z-20 flex flex-col items-center"
+          >
+            {/* Holographic vertical light streams */}
+            <div className="relative flex h-14 w-12 items-end justify-center overflow-hidden">
+              <span
+                className={`h-full w-0.5 bg-gradient-to-t from-[#1EB954] to-transparent transition-all duration-500 ${
+                  isHovered || isInteracting
+                    ? "opacity-90 scale-y-110"
+                    : "opacity-45"
+                }`}
+              />
+              <span
+                className={`mx-1.5 h-3/4 w-0.5 bg-gradient-to-t from-[#6EE7B7] to-transparent transition-all duration-500 ${
+                  isHovered || isInteracting
+                    ? "opacity-95 scale-y-125"
+                    : "opacity-40"
+                }`}
+              />
+              <span
+                className={`h-4/5 w-0.5 bg-gradient-to-t from-[#169A48] to-transparent transition-all duration-500 ${
+                  isHovered || isInteracting
+                    ? "opacity-85 scale-y-110"
+                    : "opacity-35"
+                }`}
+              />
+            </div>
+            {/* Floating Energy Particle at the Hand Base */}
+            <span className="h-2 w-2 rounded-full bg-[#1EB954] shadow-[0_0_12px_#1EB954]" />
+          </div>
+
+          {/* 7. Subtle Core Light on Robot's Chest */}
           <div
             aria-hidden="true"
             className="pointer-events-none absolute top-[57%] left-[50%] z-20 -translate-x-1/2 -translate-y-1/2"
           >
-            <span className="absolute -inset-2 animate-pulse rounded-full bg-[#1EB954]/20 blur-xs" />
-            <span className="inline-block h-3 w-3 rounded-full bg-[#1EB954]/70 blur-[1px]" />
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#1EB954]/80 blur-[1px]" />
           </div>
 
-          {/* 9. Soft Ground Floating Shadow */}
+          {/* 8. Soft Ground Floating Shadow */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -bottom-2 left-1/2 h-5 w-3/5 -translate-x-1/2 rounded-full bg-[#169A48]/15 blur-md dark:bg-black/40"
+            className="pointer-events-none absolute -bottom-3 left-1/2 h-4 w-1/2 -translate-x-1/2 rounded-full bg-[#169A48]/12 blur-md dark:bg-black/35"
           />
         </div>
       </div>

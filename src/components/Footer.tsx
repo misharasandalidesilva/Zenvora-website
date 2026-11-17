@@ -207,18 +207,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* GIGANTIC CREATIVE WATERMARK BRAND TYPOGRAPHY */}
-        <div className="relative mt-12 flex items-center justify-center overflow-hidden py-4 select-none">
-          <span
-            aria-hidden="true"
-            className="font-[family-name:var(--font-plus-jakarta)] text-[12vw] font-black tracking-[0.22em] uppercase text-slate-900/[0.04] transition-colors duration-500 dark:text-white/[0.035] pointer-events-none"
-          >
-            ZENVORA
-          </span>
-        </div>
-
         {/* Bottom Sub-Footer Bar */}
-        <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 text-xs text-slate-500 dark:border-[#1F2F28] dark:text-[#94A3B8] sm:flex-row">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 text-xs text-slate-500 dark:border-[#1F2F28] dark:text-[#94A3B8] sm:flex-row">
           <p className="flex items-center gap-1.5 text-center sm:text-left">
             <span>&copy; 2026 ZENVORA. Made with</span>
             <Heart className="h-3.5 w-3.5 fill-red-500 text-red-500 inline" />

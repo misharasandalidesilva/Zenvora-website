@@ -207,8 +207,24 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Luminous Brand Typography (Styled after reference CONVRTO design) */}
+        <div className="relative mt-16 mb-2 flex items-center justify-center overflow-hidden py-4 select-none">
+          {/* Ambient Emerald Spotlight Glow */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute h-28 w-3/4 max-w-2xl rounded-full bg-gradient-to-r from-transparent via-[#1EB954]/20 to-transparent blur-2xl dark:via-[#1EB954]/28"
+          />
+
+          <span
+            aria-hidden="true"
+            className="relative font-[family-name:var(--font-plus-jakarta)] text-6xl font-black tracking-tight uppercase sm:text-7xl md:text-8xl lg:text-9xl leading-none bg-gradient-to-r from-[#173D2C] via-[#2F885B] via-[#4AB58C] to-[#122E22] bg-clip-text text-transparent dark:from-[#0E261B] dark:via-[#1D583B] dark:via-[#4AB58C] dark:to-[#122E21] drop-shadow-[0_4px_20px_rgba(22,154,72,0.15)] dark:drop-shadow-[0_8px_36px_rgba(30,185,84,0.32)] transition-transform duration-500 hover:scale-[1.01]"
+          >
+            ZENVORA
+          </span>
+        </div>
+
         {/* Bottom Sub-Footer Bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 text-xs text-slate-500 dark:border-[#1F2F28] dark:text-[#94A3B8] sm:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-6 text-xs text-slate-500 dark:border-[#1F2F28] dark:text-[#94A3B8] sm:flex-row">
           <p className="flex items-center gap-1.5 text-center sm:text-left">
             <span>&copy; 2026 ZENVORA. Made with</span>
             <Heart className="h-3.5 w-3.5 fill-red-500 text-red-500 inline" />

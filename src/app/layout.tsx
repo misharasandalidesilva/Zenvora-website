@@ -43,9 +43,32 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} dark scroll-smooth`}
     >
-      <body className="min-h-screen bg-[#090D0B] text-white antialiased selection:bg-[#1EB954]/30 selection:text-white">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('zenvora-theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var theme = saved || (prefersDark ? 'dark' : 'light');
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.colorScheme = 'dark';
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.style.colorScheme = 'light';
+                  }
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-screen bg-[#F8FAFC] text-[#0F172A] transition-colors duration-300 dark:bg-[#090D0B] dark:text-white antialiased selection:bg-[#1EB954]/30 selection:text-white">
         {children}
       </body>
     </html>

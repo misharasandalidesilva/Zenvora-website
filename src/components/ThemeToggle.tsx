@@ -15,7 +15,10 @@ function subscribe(callback: () => void) {
 }
 
 function getSnapshot(): Theme {
-  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+  return typeof document !== "undefined" &&
+    document.documentElement.classList.contains("dark")
+    ? "dark"
+    : "light";
 }
 
 function getServerSnapshot(): Theme {
@@ -32,8 +35,13 @@ export default function ThemeToggle() {
     } catch {
       // ignore storage errors
     }
-    document.documentElement.classList.toggle("dark", next === "dark");
-    document.documentElement.style.colorScheme = next;
+    if (next === "dark") {
+      document.documentElement.classList.add("dark");
+      document.documentElement.style.colorScheme = "dark";
+    } else {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.style.colorScheme = "light";
+    }
     window.dispatchEvent(new Event("zenvora-theme-change"));
   };
 
@@ -41,16 +49,15 @@ export default function ThemeToggle() {
     <button
       type="button"
       onClick={toggleTheme}
-      aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+      aria-label={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
       title={theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
-      className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-700 transition-all duration-200 hover:border-[#169A48]/50 hover:text-[#169A48] dark:border-[#1F2F28] dark:bg-[#121915] dark:text-[#94A3B8] dark:hover:border-[#1EB954]/50 dark:hover:text-[#1EB954]"
+      className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-xs transition-all duration-200 hover:border-[#169A48] hover:text-[#169A48] hover:scale-105 active:scale-95 dark:border-[#1F2F28] dark:bg-[#121915] dark:text-[#94A3B8] dark:shadow-none dark:hover:border-[#1EB954]/60 dark:hover:text-[#1EB954]"
     >
       {theme === "dark" ? (
-        <Sun className="h-4 w-4" />
+        <Sun className="h-4 w-4 text-amber-400 transition-transform duration-300 rotate-0 hover:rotate-45" />
       ) : (
-        <Moon className="h-4 w-4" />
+        <Moon className="h-4 w-4 text-slate-700 transition-transform duration-300 rotate-0 hover:-rotate-12 hover:text-[#169A48]" />
       )}
     </button>
   );
 }
-

@@ -1,4 +1,5 @@
-import { Compass, PenTool, Code, Rocket } from "lucide-react";
+import Link from "next/link";
+import { Compass, PenTool, Code, Rocket, ArrowRight } from "lucide-react";
 
 const steps = [
   {
@@ -84,11 +85,21 @@ export default function Process() {
                                   {item.description}
                                 </p>
                               </div>
-                              );
-            })}
-                            </div>
+                            );
+                          })}
+                        </div>
+
+                        <div className="mt-12 flex justify-center">
+                          <Link
+                            href="/process"
+                            className="group inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-7 py-3 text-sm font-semibold text-[#0F172A] shadow-xs transition-all duration-300 hover:border-[#169A48] hover:text-[#169A48] hover:shadow-md dark:border-[#1F2F28] dark:bg-[#121915] dark:text-white dark:hover:border-[#1EB954]/60 dark:hover:text-[#1EB954]"
+                          >
+                            Deep Dive Into Our 4-Step Engineering Lifecycle
+                            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                          </Link>
                         </div>
                       </div>
+                    </div>
     </section>
                 );
 }

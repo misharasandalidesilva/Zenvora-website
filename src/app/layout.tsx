@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -23,7 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "ZENVORA — Turning Ideas Into Solutions.",
   description:
-    "Turning Ideas Into Solutions. We engineer scalable business systems, modern web applications, and intuitive digital experiences built to accelerate enterprise growth.",
+    "Turning Ideas Into Solutions. Boutique software engineering & web systems agency. We engineer scalable business systems, modern web applications, and intuitive digital experiences.",
   keywords: [
     "Zenvora",
     "Software Engineering Agency",
@@ -68,8 +70,12 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-[#F8FAFC] text-[#0F172A] transition-colors duration-300 dark:bg-[#090D0B] dark:text-white antialiased selection:bg-[#1EB954]/30 selection:text-white">
-        {children}
+      <body className="flex min-h-screen flex-col bg-[#F8FAFC] text-[#0F172A] transition-colors duration-300 dark:bg-[#090D0B] dark:text-white antialiased selection:bg-[#1EB954]/30 selection:text-white">
+        <Navbar />
+        <main className="flex-1">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

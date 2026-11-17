@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Code2,
   Building2,
@@ -180,6 +181,16 @@ export default function Services() {
               </div>
             );
           })}
+        </div>
+
+        <div className="mt-12 flex justify-center">
+          <Link
+            href="/services"
+            className="group inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-7 py-3 text-sm font-semibold text-[#0F172A] shadow-xs transition-all duration-300 hover:border-[#169A48] hover:text-[#169A48] hover:shadow-md dark:border-[#1F2F28] dark:bg-[#121915] dark:text-white dark:hover:border-[#1EB954]/60 dark:hover:text-[#1EB954]"
+          >
+            Explore All 6 Detailed Services &amp; Tech Stacks
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     </section>

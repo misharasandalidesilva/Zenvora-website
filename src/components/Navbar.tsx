@@ -3,18 +3,21 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight, Menu, X } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Why Us", href: "#why-us" },
-  { label: "Projects", href: "#projects" },
-  { label: "Process", href: "#process" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Why Us", href: "/why-us" },
+  { label: "Projects", href: "/projects" },
+  { label: "Process", href: "/process" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -34,7 +37,7 @@ export default function Navbar() {
     >
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
-          href="#hero"
+          href="/"
           className="group flex items-center gap-3 focus:outline-none"
           aria-label="ZENVORA Home"
         >
@@ -66,21 +69,33 @@ export default function Navbar() {
           </div>
         </Link>
 
+        {/* Desktop Navigation Links */}
         <nav
           className="hidden items-center gap-1 rounded-full border border-slate-200/80 bg-slate-100/80 px-2 py-1.5 backdrop-blur-md dark:border-[#1F2F28]/80 dark:bg-[#121915]/70 md:flex"
           aria-label="Main Navigation"
         >
-          {navLinks.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="rounded-full px-4 py-1.5 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-white hover:text-[#0F172A] dark:text-[#94A3B8] dark:hover:bg-[#1F2F28]/60 dark:hover:text-white"
-            >
-              {item.label}
-            </a>
-          ))}
+          {navLinks.map((item) => {
+            const isActive =
+              item.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ${
+                  isActive
+                    ? "bg-[#169A48] text-white shadow-xs dark:bg-[#1EB954] dark:text-[#090D0B] font-semibold"
+                    : "text-slate-600 hover:bg-white hover:text-[#0F172A] dark:text-[#94A3B8] dark:hover:bg-[#1F2F28]/60 dark:hover:text-white"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
 
+        {/* Right CTA Area */}
         <div className="hidden items-center gap-3 md:flex">
           <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-medium text-slate-600 dark:border-[#1F2F28] dark:bg-[#121915]/60 dark:text-[#94A3B8] xl:flex">
             <span className="relative flex h-2 w-2">
@@ -92,15 +107,16 @@ export default function Navbar() {
 
           <ThemeToggle />
 
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             className="group inline-flex items-center gap-2 rounded-full bg-[#169A48] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_4px_20px_rgba(22,154,72,0.3)] transition-all duration-300 hover:bg-[#1EB954] hover:shadow-[0_0_32px_rgba(30,185,84,0.55)]"
           >
             Get in Touch
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
-          </a>
+          </Link>
         </div>
 
+        {/* Mobile Hamburger & Theme Switcher */}
         <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
           <button
@@ -115,27 +131,38 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Mobile Menu Dropdown */}
       {mobileOpen && (
         <div className="border-t border-slate-200 bg-white/95 px-4 py-6 backdrop-blur-xl dark:border-[#1F2F28] dark:bg-[#090D0B]/95 md:hidden">
-          <nav className="flex flex-col gap-3">
-            {navLinks.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2 text-base font-medium text-slate-600 transition-colors hover:bg-slate-100 hover:text-[#0F172A] dark:text-[#94A3B8] dark:hover:bg-[#121915] dark:hover:text-white"
-              >
-                {item.label}
-              </a>
-            ))}
-            <a
-              href="#contact"
+          <nav className="flex flex-col gap-2">
+            {navLinks.map((item) => {
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`rounded-lg px-3 py-2.5 text-base font-medium transition-colors ${
+                    isActive
+                      ? "bg-[#169A48] text-white dark:bg-[#1EB954] dark:text-[#090D0B] font-semibold"
+                      : "text-slate-600 hover:bg-slate-100 hover:text-[#0F172A] dark:text-[#94A3B8] dark:hover:bg-[#121915] dark:hover:text-white"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+            <Link
+              href="/contact"
               onClick={() => setMobileOpen(false)}
-              className="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-[#169A48] px-5 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(30,185,84,0.35)] transition-all hover:bg-[#1EB954]"
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-full bg-[#169A48] px-5 py-3 text-sm font-semibold text-white shadow-[0_0_24px_rgba(30,185,84,0.35)] transition-all hover:bg-[#1EB954]"
             >
               Get in Touch
               <ArrowRight className="h-4 w-4" />
-            </a>
+            </Link>
           </nav>
         </div>
       )}

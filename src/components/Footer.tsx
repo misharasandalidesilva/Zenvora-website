@@ -3,11 +3,12 @@ import Link from "next/link";
 import { Globe } from "lucide-react";
 
 const quickLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Why Us", href: "#why-us" },
-  { label: "Projects", href: "#projects" },
-  { label: "Process", href: "#process" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/services" },
+  { label: "Why Us", href: "/why-us" },
+  { label: "Projects", href: "/projects" },
+  { label: "Process", href: "/process" },
+  { label: "Contact", href: "/contact" },
 ];
 
 function FacebookIcon() {
@@ -47,100 +48,100 @@ const socials = [
   { label: "GitHub", href: "https://github.com", renderIcon: () => <GithubIcon /> },
   { label: "LinkedIn", href: "https://linkedin.com", renderIcon: () => <LinkedinIcon /> },
   { label: "X / Twitter", href: "https://x.com", renderIcon: () => <XIcon /> },
-  { label: "Website", href: "#hero", renderIcon: () => <Globe className="h-4 w-4" /> },
+  { label: "Website", href: "/", renderIcon: () => <Globe className="h-4 w-4" /> },
 ];
 
 export default function Footer() {
   return (
-      <footer className="border-t border-slate-200 bg-[#F8FAFC] transition-colors duration-300 dark:border-[#1F2F28] dark:bg-[#090D0B]">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-            <div className="flex flex-col gap-3">
-              <Link href="#hero" className="flex items-center gap-3">
-                <Image
-                  src="/images/zenvora-icon-light.png"
-                  alt="ZENVORA Logo"
-                  width={44}
-                  height={30}
-                  className="block h-7 w-auto object-contain dark:hidden"
-                />
-                <Image
-                  src="/images/zenvora-icon-dark.png"
-                  alt="ZENVORA Logo"
-                  width={44}
-                  height={30}
-                  className="hidden h-7 w-auto object-contain dark:block"
-                />
-                  <span className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-[0.14em] text-[#0F172A] dark:text-white">
-                    ZENVOR<span className="text-[#169A48] dark:text-[#1EB954]">A</span>
-                  </span>
+    <footer className="border-t border-slate-200 bg-[#F8FAFC] transition-colors duration-300 dark:border-[#1F2F28] dark:bg-[#090D0B]">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+          <div className="flex flex-col gap-3">
+            <Link href="/" className="flex items-center gap-3">
+              <Image
+                src="/images/zenvora-icon-light.png"
+                alt="ZENVORA Logo"
+                width={44}
+                height={30}
+                className="block h-7 w-auto object-contain dark:hidden"
+              />
+              <Image
+                src="/images/zenvora-icon-dark.png"
+                alt="ZENVORA Logo"
+                width={44}
+                height={30}
+                className="hidden h-7 w-auto object-contain dark:block"
+              />
+              <span className="font-[family-name:var(--font-plus-jakarta)] text-lg font-bold tracking-[0.14em] text-[#0F172A] dark:text-white">
+                ZENVOR<span className="text-[#169A48] dark:text-[#1EB954]">A</span>
+              </span>
+            </Link>
+            <p className="max-w-xs text-xs leading-relaxed text-slate-600 dark:text-[#94A3B8]">
+              <span className="font-semibold text-[#169A48] dark:text-[#1EB954]">
+                Turning Ideas Into Solutions.
+              </span>{" "}
+              Boutique software engineering &amp; web systems agency.
+            </p>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-fit items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 shadow-xs transition-colors hover:border-[#169A48]/50 hover:text-[#169A48] dark:border-[#1F2F28] dark:bg-[#121915] dark:text-[#94A3B8] dark:shadow-none dark:hover:border-[#1EB954]/50 dark:hover:text-white"
+            >
+              <FacebookIcon />
+              <span>
+                Facebook:{" "}
+                <strong className="text-[#0F172A] dark:text-white">ZENVORA</strong>
+              </span>
+            </a>
+          </div>
+
+          <nav className="flex flex-wrap gap-6" aria-label="Footer Navigation">
+            {quickLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm font-medium text-slate-600 transition-colors hover:text-[#169A48] dark:text-[#94A3B8] dark:hover:text-white"
+              >
+                {item.label}
               </Link>
-                  <p className="max-w-xs text-xs leading-relaxed text-slate-600 dark:text-[#94A3B8]">
-                    <span className="font-semibold text-[#169A48] dark:text-[#1EB954]">
-                      Turning Ideas Into Solutions.
-                    </span>{" "}
-                    Boutique software engineering &amp; web systems agency.
-                  </p>
-                  <a
-                    href="https://www.facebook.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex w-fit items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-600 shadow-xs transition-colors hover:border-[#169A48]/50 hover:text-[#169A48] dark:border-[#1F2F28] dark:bg-[#121915] dark:text-[#94A3B8] dark:shadow-none dark:hover:border-[#1EB954]/50 dark:hover:text-white"
-                  >
-                    <FacebookIcon />
-                    <span>
-                      Facebook:{" "}
-                      <strong className="text-[#0F172A] dark:text-white">ZENVORA</strong>
-                    </span>
-                  </a>
-                </div>
+            ))}
+          </nav>
 
-                <nav className="flex flex-wrap gap-6" aria-label="Footer Navigation">
-                  {quickLinks.map((item) => (
-                    <a
-                      key={item.href}
-                      href={item.href}
-                      className="text-sm font-medium text-slate-600 transition-colors hover:text-[#169A48] dark:text-[#94A3B8] dark:hover:text-white"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                </nav>
+          <div className="flex items-center gap-3">
+            {socials.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target={social.href.startsWith("http") ? "_blank" : undefined}
+                rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                aria-label={social.label}
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 shadow-xs transition-all hover:border-[#169A48] hover:text-[#169A48] dark:border-[#1F2F28] dark:bg-[#121915] dark:text-[#94A3B8] dark:shadow-none dark:hover:border-[#1EB954]/50 dark:hover:text-[#1EB954]"
+              >
+                {social.renderIcon()}
+              </a>
+            ))}
+          </div>
+        </div>
 
-                <div className="flex items-center gap-3">
-                  {socials.map((social) => (
-                    <a
-                      key={social.label}
-                      href={social.href}
-                      target={social.href.startsWith("http") ? "_blank" : undefined}
-                      rel={social.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      aria-label={social.label}
-                      className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-600 shadow-xs transition-all hover:border-[#169A48] hover:text-[#169A48] dark:border-[#1F2F28] dark:bg-[#121915] dark:text-[#94A3B8] dark:shadow-none dark:hover:border-[#1EB954]/50 dark:hover:text-[#1EB954]"
-                    >
-                      {social.renderIcon()}
-                    </a>
-                  ))}
-                </div>
-            </div>
-
-              <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-7 text-xs text-slate-500 dark:border-[#1F2F28]/80 dark:text-[#94A3B8] sm:flex-row">
-                <p>&copy; 2026 ZENVORA. All rights reserved.</p>
-                <div className="flex items-center gap-6">
-                    <a
-                      href="#contact"
-                      className="transition-colors hover:text-[#0F172A] dark:hover:text-white"
-                    >
-                      Privacy Policy
-                    </a>
-                      <a
-                        href="#contact"
-                        className="transition-colors hover:text-[#0F172A] dark:hover:text-white"
-                      >
-                        Terms of Service
-                      </a>
-                    </div>
-                </div>
-              </div>
-            </footer>
-            );
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-7 text-xs text-slate-500 dark:border-[#1F2F28]/80 dark:text-[#94A3B8] sm:flex-row">
+          <p>&copy; 2026 ZENVORA. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <Link
+              href="/contact"
+              className="transition-colors hover:text-[#0F172A] dark:hover:text-white"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/contact"
+              className="transition-colors hover:text-[#0F172A] dark:hover:text-white"
+            >
+              Terms of Service
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 }

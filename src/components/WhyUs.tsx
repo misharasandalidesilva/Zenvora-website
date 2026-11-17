@@ -1,4 +1,5 @@
-import { CheckCircle2, Gauge, Lock, Layers3 } from "lucide-react";
+import Link from "next/link";
+import { CheckCircle2, Gauge, Lock, Layers3, ArrowRight } from "lucide-react";
 
 const pillars = [
   {
@@ -60,6 +61,16 @@ export default function WhyUs() {
                 </li>
               ))}
             </ul>
+
+            <div className="mt-8">
+              <Link
+                href="/why-us"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-[#169A48] transition-colors hover:text-[#1EB954] dark:text-[#1EB954] dark:hover:text-[#6EE7B7]"
+              >
+                Learn more about our architectural standards
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
 
           <div className="space-y-4 lg:col-span-7">

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   ArrowRight,
   Sparkles,
@@ -66,21 +67,21 @@ export default function Hero() {
             </p>
 
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
-              <a
-                href="#contact"
+              <Link
+                href="/contact"
                 className="group relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-[#169A48] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_8px_28px_rgba(22,154,72,0.35)] transition-all duration-300 hover:bg-[#1EB954] hover:shadow-[0_0_44px_rgba(30,185,84,0.6)] sm:w-auto"
               >
                 <span className="animate-beam pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-[-20deg]" />
                 <span className="relative">Start Your Project</span>
                 <ArrowRight className="relative h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
+              </Link>
 
-              <a
-                href="#services"
+              <Link
+                href="/services"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-7 py-3.5 text-sm font-semibold text-[#0F172A] transition-all duration-300 hover:border-[#169A48] hover:text-[#169A48] dark:border-[#1F2F28] dark:bg-[#121915]/80 dark:text-white dark:hover:border-[#1EB954]/60 dark:hover:bg-[#121915] sm:w-auto"
               >
                 Explore Services
-              </a>
+              </Link>
             </div>
 
             <div className="mt-10 grid grid-cols-3 gap-3 border-t border-slate-200 pt-7 text-left dark:border-[#1F2F28]/80">

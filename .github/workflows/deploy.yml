@@ -1,0 +1,112 @@
+name: Build, Push & Deploy to CapRover
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  # ============================================================
+  # Build & Deploy to CapRover via GHCR
+  # ============================================================
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare Image Name
+        id: prep
+        run: |
+          IMAGE_NAME="${{ env.REGISTRY }}/${GITHUB_REPOSITORY,,}"
+          echo "image=${IMAGE_NAME}:${{ github.sha }}" >> $GITHUB_OUTPUT
+          echo "image_latest=${IMAGE_NAME}:latest" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ steps.prep.outputs.image }}
+            ${{ steps.prep.outputs.image_latest }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Deploy to CapRover
+        env:
+          CAPROVER_URL: ${{ secrets.CAPROVER_URL || vars.CAPROVER_URL }}
+          CAPROVER_APP: ${{ secrets.CAPROVER_APP || vars.CAPROVER_APP }}
+          CAPROVER_APP_TOKEN: ${{ secrets.CAPROVER_APP_TOKEN || vars.CAPROVER_APP_TOKEN }}
+        run: |
+          if [ -z "$CAPROVER_URL" ] || [ -z "$CAPROVER_APP" ] || [ -z "$CAPROVER_APP_TOKEN" ]; then
+            echo "::error::Missing required CapRover configuration! Ensure CAPROVER_URL, CAPROVER_APP, and CAPROVER_APP_TOKEN are set in GitHub Secrets or Variables."
+            exit 1
+          fi
+
+          CLEAN_URL="${CAPROVER_URL%/}"
+          IMAGE="${{ steps.prep.outputs.image }}"
+
+          echo "Deploying image $IMAGE to CapRover app '${CAPROVER_APP}' at ${CLEAN_URL}..."
+
+          PAYLOAD=$(jq -n \
+            --arg img "$IMAGE" \
+            --arg sha "${{ github.sha }}" \
+            '{captainDefinitionContent: ("{\"schemaVersion\":2,\"imageName\":\"" + $img + "\"}"), gitHash: $sha}')
+
+          RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST \
+            -H "Content-Type: application/json" \
+            -H "x-namespace: captain" \
+            -H "x-captain-app-token: $CAPROVER_APP_TOKEN" \
+            -d "$PAYLOAD" \
+            "$CLEAN_URL/api/v2/user/apps/appData/$CAPROVER_APP")
+
+          HTTP_CODE=$(echo "$RESPONSE" | grep "HTTP_STATUS" | cut -d':' -f2)
+          BODY=$(echo "$RESPONSE" | sed '/HTTP_STATUS/d')
+
+          echo "Server Response: $BODY"
+          echo "HTTP Status Code: $HTTP_CODE"
+
+          if echo "$BODY" | grep -q '"status":100' || echo "$BODY" | grep -iq "deploy is done"; then
+            echo "::notice::Successfully deployed $IMAGE to CapRover app '$CAPROVER_APP'!"
+            exit 0
+          fi
+
+          if ! echo "$CLEAN_URL" | grep -qE '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+'; then
+            echo "Direct API did not return status 100. Attempting CapRover CLI fallback..."
+            if docker run --rm caprover/cli-caprover:2.2.3 caprover deploy \
+              --appToken "$CAPROVER_APP_TOKEN" \
+              --caproverUrl "$CLEAN_URL" \
+              --caproverApp "$CAPROVER_APP" \
+              --imageName "$IMAGE"; then
+              echo "Deployment succeeded via CapRover CLI!"
+              exit 0
+            fi
+          fi
+
+          echo "::error::Deployment to CapRover failed. Response: $BODY"
+          exit 1
